@@ -5,6 +5,10 @@ import (
 	"time"
 )
 
+type ListPaymentsResponse struct {
+	Payments []Payment
+}
+
 type Payment struct {
 	Id                  string        `json:"id"`
 	Device              Device        `json:"device"`
