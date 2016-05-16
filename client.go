@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"regexp"
 )
 
 type Client struct {
@@ -37,7 +38,6 @@ func (c *Client) GetPayment(config *GetPaymentRequest) (*Payment, error) {
 // Fetch collection of payments.
 // https://docs.connect.squareup.com/api/connect/v1/#get-payments
 // TODO Respect optional query params
-// TODO Store next-page URL from "Link" header
 func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsResponse, error) {
 	var locationId string
 
@@ -73,6 +73,14 @@ func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsRespons
 
 	listPaymentResp := ListPaymentsResponse{}
 	err = json.Unmarshal(contents, &listPaymentResp.Payments)
+
+	link := resp.Header.Get("Link")
+	re := regexp.MustCompile(`\<([^\>]*)`)
+	match := re.FindStringSubmatch(link)
+
+	if len(match) > 0 {
+		listPaymentResp.NextPageURL = match[1]
+	}
 
 	return &listPaymentResp, err
 }

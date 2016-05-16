@@ -6,7 +6,8 @@ import (
 )
 
 type ListPaymentsResponse struct {
-	Payments []Payment
+	Payments    []Payment
+	NextPageURL string
 }
 
 type Payment struct {
