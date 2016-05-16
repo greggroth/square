@@ -12,16 +12,18 @@ type Client struct {
 	baseURL     string
 }
 
+// Fetch a payment by ID
+// https://docs.connect.squareup.com/api/connect/v1/#get-paymentid
 func (c *Client) GetPayment(config *GetPaymentRequest) (*Payment, error) {
-	var merchantId string
+	var locationId string
 
-	if config.MerchantId == "" {
-		merchantId = "me"
+	if config.LocationId == "" {
+		locationId = "me"
 	} else {
-		merchantId = config.MerchantId
+		locationId = config.LocationId
 	}
 
-	u, err := url.Parse(c.baseURL + merchantId + "/payments/" + config.PaymentId)
+	u, err := url.Parse(c.baseURL + locationId + "/payments/" + config.PaymentId)
 
 	if err != nil {
 		return nil, err
