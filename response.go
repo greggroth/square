@@ -12,6 +12,8 @@ type ListPaymentsResponse struct {
 
 type Payment struct {
 	Id                  string        `json:"id"`
+	MerchantId          string        `json:"merchant_id"`
+	CreatedAt           time.Time     `json:"created_at"`
 	Device              Device        `json:"device"`
 	Itemizations        []Itemization `json:"itemizations"`
 	Refunds             []Refund      `json:"refunds"`
