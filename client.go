@@ -91,7 +91,8 @@ func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsRespons
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
 
-	listPaymentResp := ListPaymentsResponse{}
+	listPaymentResp := ListPaymentsResponse{client: c}
+
 	err = json.Unmarshal(contents, &listPaymentResp.Payments)
 
 	link := resp.Header.Get("Link")

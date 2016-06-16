@@ -17,4 +17,5 @@ type ListPaymentsRequest struct {
 	BeginTime  time.Time
 	EndTime    time.Time
 	Limit      int64
+	url        string
 }

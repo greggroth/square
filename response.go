@@ -8,6 +8,21 @@ import (
 type ListPaymentsResponse struct {
 	Payments    []Payment
 	NextPageURL string
+	client      *Client
+}
+
+type NoMorePages struct{}
+
+func (f NoMorePages) Error() string {
+	return "Last Page Reached"
+}
+
+func (resp *ListPaymentsResponse) NextPage() (*ListPaymentsResponse, error) {
+	if resp.NextPageURL == "" {
+		return nil, NoMorePages{}
+	}
+
+	return resp.client.ListPayments(&ListPaymentsRequest{url: resp.NextPageURL})
 }
 
 type Payment struct {
