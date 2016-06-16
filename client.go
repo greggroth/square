@@ -6,7 +6,10 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"strconv"
 )
+
+const iSO8601 = "2006-01-02T15:04:05Z"
 
 type Client struct {
 	AccessToken string
@@ -52,6 +55,22 @@ func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsRespons
 	if err != nil {
 		return nil, err
 	}
+
+	q := u.Query()
+
+	if !config.BeginTime.IsZero() {
+		q.Set("begin_time", config.BeginTime.Format(iSO8601))
+	}
+
+	if !config.EndTime.IsZero() {
+		q.Set("end_time", config.EndTime.Format(iSO8601))
+	}
+
+	if config.Limit != 0 {
+		q.Set("limit", strconv.FormatInt(config.Limit, 10))
+	}
+
+	u.RawQuery = q.Encode()
 
 	req, err := http.NewRequest("GET", u.String(), nil)
 

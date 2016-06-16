@@ -16,6 +16,5 @@ type ListPaymentsRequest struct {
 	LocationId string
 	BeginTime  time.Time
 	EndTime    time.Time
-	Order      string
 	Limit      int64
 }
