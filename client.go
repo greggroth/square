@@ -34,8 +34,9 @@ func (c *Client) GetPayment(config *GetPaymentRequest) (*Payment, error) {
 	}
 
 	payment := &Payment{}
-	c.request(u, payment)
-	return payment, nil
+	json, err := c.request(u, payment)
+	payment.JSON = json
+	return payment, err
 }
 
 // Fetch collection of payments.
@@ -104,11 +105,11 @@ func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsRespons
 	return &listPaymentResp, err
 }
 
-func (c *Client) request(url *url.URL, responseHolder interface{}) error {
+func (c *Client) request(url *url.URL, responseHolder interface{}) ([]byte, error) {
 	req, err := http.NewRequest("GET", url.String(), nil)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	req.Header.Add("Authorization", "Bearer "+c.AccessToken)
@@ -117,12 +118,12 @@ func (c *Client) request(url *url.URL, responseHolder interface{}) error {
 	resp, err := http.DefaultClient.Do(req)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
 
 	err = json.Unmarshal(contents, responseHolder)
-	return err
+	return contents, err
 }

@@ -29,6 +29,7 @@ type Payment struct {
 	InclusiveTaxMoney   Money         `json:"inclusive_tax_money"`
 	ProcessingFeeMoney  Money         `json:"processing_fee_money"`
 	TotalCollectedMoney Money         `json:"total_collected_money"`
+	JSON                []byte
 }
 
 func (p *Payment) WasFullyRefunded() bool {
