@@ -1,8 +1,13 @@
 package square
 
 import (
+	"errors"
 	"strconv"
 	"time"
+)
+
+var (
+	NoMorePages = errors.New("Last Page Reached")
 )
 
 type ListPaymentsResponse struct {
@@ -11,15 +16,9 @@ type ListPaymentsResponse struct {
 	client      *Client
 }
 
-type NoMorePages struct{}
-
-func (f NoMorePages) Error() string {
-	return "Last Page Reached"
-}
-
 func (resp *ListPaymentsResponse) NextPage() (*ListPaymentsResponse, error) {
 	if resp.NextPageURL == "" {
-		return nil, NoMorePages{}
+		return nil, NoMorePages
 	}
 
 	return resp.client.ListPayments(&ListPaymentsRequest{url: resp.NextPageURL})
