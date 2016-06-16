@@ -28,6 +28,7 @@ type Payment struct {
 	Id                  string        `json:"id"`
 	MerchantId          string        `json:"merchant_id"`
 	CreatedAt           time.Time     `json:"created_at"`
+	CreatorId           string        `json"creator_id"`
 	Device              Device        `json:"device"`
 	Itemizations        []Itemization `json:"itemizations"`
 	Refunds             []Refund      `json:"refunds"`
@@ -43,7 +44,10 @@ type Payment struct {
 	InclusiveTaxMoney   Money         `json:"inclusive_tax_money"`
 	ProcessingFeeMoney  Money         `json:"processing_fee_money"`
 	TotalCollectedMoney Money         `json:"total_collected_money"`
-	JSON                []byte
+	ReceiptURL          string        `json:"receipt_url"`
+	PaymentURL          string        `json:"payment_url"`
+	InclusiveTax        []PaymentTax  `json:"inclusive_tax"`
+	AdditiveTax         []PaymentTax  `json:"additive_tax"`
 }
 
 func (p *Payment) WasFullyRefunded() bool {
@@ -141,4 +145,12 @@ type Device struct {
 type Money struct {
 	Amount       int64  `json:"amount"`
 	CurrencyCode string `json:"currency_code"`
+}
+
+type PaymentTax struct {
+	Name          string `json:"name"`
+	AppliedMoney  Money  `json:"applied_money"`
+	Rate          string `json:"rate"`
+	InclusiveType string `json:"inclusive_type"`
+	FeeId         string `json:"fee_id"`
 }
