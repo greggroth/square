@@ -42,7 +42,10 @@ func (c *Client) GetPayment(config *GetPaymentRequest) (*Payment, error) {
 // https://docs.connect.squareup.com/api/connect/v1/#get-payments
 // TODO Respect optional query params
 func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsResponse, error) {
-	var locationId string
+	var (
+		locationId string
+		urlString  string
+	)
 
 	if config.LocationId == "" {
 		locationId = "me"
@@ -50,29 +53,34 @@ func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsRespons
 		locationId = config.LocationId
 	}
 
-	u, err := url.Parse(c.baseURL + locationId + "/payments")
+	if config.url == "" {
+		u, err := url.Parse(c.baseURL + locationId + "/payments")
 
-	if err != nil {
-		return nil, err
+		if err != nil {
+			return nil, err
+		}
+
+		q := u.Query()
+
+		if !config.BeginTime.IsZero() {
+			q.Set("begin_time", config.BeginTime.Format(iSO8601))
+		}
+
+		if !config.EndTime.IsZero() {
+			q.Set("end_time", config.EndTime.Format(iSO8601))
+		}
+
+		if config.Limit != 0 {
+			q.Set("limit", strconv.FormatInt(config.Limit, 10))
+		}
+
+		u.RawQuery = q.Encode()
+		urlString = u.String()
+	} else {
+		urlString = config.url
 	}
 
-	q := u.Query()
-
-	if !config.BeginTime.IsZero() {
-		q.Set("begin_time", config.BeginTime.Format(iSO8601))
-	}
-
-	if !config.EndTime.IsZero() {
-		q.Set("end_time", config.EndTime.Format(iSO8601))
-	}
-
-	if config.Limit != 0 {
-		q.Set("limit", strconv.FormatInt(config.Limit, 10))
-	}
-
-	u.RawQuery = q.Encode()
-
-	req, err := http.NewRequest("GET", u.String(), nil)
+	req, err := http.NewRequest("GET", urlString, nil)
 
 	if err != nil {
 		return nil, err
