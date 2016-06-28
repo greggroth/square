@@ -118,7 +118,10 @@ type Tender struct {
 }
 
 type ItemDetail struct {
-	Sku string `json:"sku"`
+	Sku             string `json:"sku"`
+	CategoryName    string `json:"category_name"`
+	ItemId          string `json:"item_id"`
+	ItemVariationId string `json:"item_variation_id"`
 }
 
 type ItemizationModifier struct {
