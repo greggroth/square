@@ -92,7 +92,7 @@ func TestListPaymentsWithBeginTime(t *testing.T) {
 		}
 
 		path, _ := url.QueryUnescape(r.URL.String())
-		if path != "/payments?begin_time=2016-06-01T08:00:00Z&end_time=2016-06-03T09:30:00Z&limit=50" {
+		if path != "/me/payments?begin_time=2016-06-01T08:00:00Z&end_time=2016-06-03T09:30:00Z&limit=50" {
 			t.Error("Request was made to:", path)
 		}
 

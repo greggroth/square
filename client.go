@@ -27,7 +27,7 @@ func (c *Client) GetPayment(config *GetPaymentRequest) (*Payment, error) {
 		locationId = config.LocationId
 	}
 
-	u, err := url.Parse(c.baseURL + locationId + "/payments/" + config.PaymentId)
+	u, err := url.Parse(c.baseURL + "/" + locationId + "/payments/" + config.PaymentId)
 
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func (c *Client) ListPayments(config *ListPaymentsRequest) (*ListPaymentsRespons
 	}
 
 	if config.url == "" {
-		u, err := url.Parse(c.baseURL + locationId + "/payments")
+		u, err := url.Parse(c.baseURL + "/" + locationId + "/payments")
 
 		if err != nil {
 			return nil, err
