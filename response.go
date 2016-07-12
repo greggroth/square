@@ -154,6 +154,6 @@ type PaymentTax struct {
 	Name          string `json:"name"`
 	AppliedMoney  Money  `json:"applied_money"`
 	Rate          string `json:"rate"`
-	InclusiveType string `json:"inclusive_type"`
+	InclusionType string `json:"inclusion_type"`
 	FeeId         string `json:"fee_id"`
 }
