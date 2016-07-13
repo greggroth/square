@@ -106,15 +106,19 @@ type Refund struct {
 }
 
 type Tender struct {
-	Id            string `json:"id"`
-	Name          string `json:"name"`
-	Type          string `json:"type"`
-	TotalMoney    Money  `json:"total_money"`
-	RefundedMoney Money  `json:"refunded_money"`
-	TenderedMoney Money  `json:"tendered_money"`
-	CardBrand     string `json:"card_brand"`
-	PanSuffix     string `json:"pan_suffix"`
-	EntryMethod   string `json:"entry_method"`
+	Id              string `json:"id"`
+	Name            string `json:"name"`
+	Type            string `json:"type"`
+	TotalMoney      Money  `json:"total_money"`
+	RefundedMoney   Money  `json:"refunded_money"`
+	TenderedMoney   Money  `json:"tendered_money"`
+	CardBrand       string `json:"card_brand"`
+	PanSuffix       string `json:"pan_suffix"`
+	EntryMethod     string `json:"entry_method"`
+	PaymentNote     string `json:"payment_note"`
+	ChangeBackMoney Money  `json:"change_back_money"`
+	EmployeeId      string `json:"employee_id"`
+	ReceiptURL      string `json:"receipt_url"`
 }
 
 type ItemDetail struct {
