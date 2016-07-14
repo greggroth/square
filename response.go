@@ -36,14 +36,12 @@ type Payment struct {
 	TaxMoney            Money         `json:"tax_money"`
 	TipMoney            Money         `json:"tip_money"`
 	DiscountMoney       Money         `json:"discount_money"`
-	RefundedMoney       Money         `json:"refunded_money"`
-	NetSalesMoney       Money         `json:"net_sales_money"`
-	NetTotalMoney       Money         `json:"net_total_money"`
-	GrossSalesMoney     Money         `json:"gross_sales_money"`
-	AdditiveTaxMoney    Money         `json:"additive_tax_money"`
-	InclusiveTaxMoney   Money         `json:"inclusive_tax_money"`
-	ProcessingFeeMoney  Money         `json:"processing_fee_money"`
 	TotalCollectedMoney Money         `json:"total_collected_money"`
+	ProcessingFeeMoney  Money         `json:"processing_fee_money"`
+	NetTotalMoney       Money         `json:"net_total_money"`
+	RefundedMoney       Money         `json:"refunded_money"`
+	InclusiveTaxMoney   Money         `json:"inclusive_tax_money"`
+	AdditiveTaxMoney    Money         `json:"additive_tax_money"`
 	ReceiptURL          string        `json:"receipt_url"`
 	PaymentURL          string        `json:"payment_url"`
 	InclusiveTax        []PaymentTax  `json:"inclusive_tax"`
